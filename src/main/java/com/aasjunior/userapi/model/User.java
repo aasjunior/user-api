@@ -1,6 +1,7 @@
 package com.aasjunior.userapi.model;
 
 import com.aasjunior.userapi.constants.UserRole;
+import com.aasjunior.userapi.dto.UserDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -18,7 +19,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
+@Entity(name = "users")
 @Table(name = "users")
 public class User implements UserDetails {
     @Id
@@ -30,6 +31,17 @@ public class User implements UserDetails {
     private String password;
     private UserRole role;
     private LocalDateTime registrationDate;
+
+    public static User convert(UserDTO userDTO, String encryptedPassword){
+        User user = new User();
+        user.setName(userDTO.getName());
+        user.setUsername(userDTO.getUsername());
+        user.setEmail(userDTO.getEmail());
+        user.setPassword(userDTO.getPassword());
+        user.setRole(userDTO.getRole());
+        user.setRegistrationDate(userDTO.getRegistrationDate());
+        return user;
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
