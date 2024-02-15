@@ -6,6 +6,7 @@ import com.aasjunior.userapi.model.User;
 public class DTOConverter {
     public static UserDTO convert(User user){
         UserDTO userDTO = new UserDTO();
+        userDTO.setId(user.getId());
         userDTO.setName(user.getName());
         userDTO.setUsername(user.getUsername());
         userDTO.setEmail(user.getEmail());

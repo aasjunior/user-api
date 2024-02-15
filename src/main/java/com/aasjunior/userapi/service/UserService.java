@@ -27,4 +27,17 @@ public class UserService {
         User user = (User) userRepository.findByUsername(username);
         return DTOConverter.convert(user);
     }
+
+    public User findByUsernameSecret(String username){
+        User user = (User) userRepository.findByUsername(username);
+        return user;
+    }
+
+    public UserDTO delete(String userId){
+        User user = userRepository
+                .findById(userId)
+                .orElseThrow(() -> new RuntimeException("User Not Found"));
+        userRepository.delete(user);
+        return DTOConverter.convert(user);
+    }
 }

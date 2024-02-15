@@ -12,11 +12,11 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserDTO {
-    private String id;
+public class UserRegistrationDTO {
     private String name;
     private String username;
     private String email;
+    private String password;
     private UserRole role;
     private LocalDateTime registrationDate;
 }

@@ -2,6 +2,7 @@ package com.aasjunior.userapi.model;
 
 import com.aasjunior.userapi.constants.UserRole;
 import com.aasjunior.userapi.dto.UserDTO;
+import com.aasjunior.userapi.dto.UserRegistrationDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -32,12 +33,12 @@ public class User implements UserDetails {
     private UserRole role;
     private LocalDateTime registrationDate;
 
-    public static User convert(UserDTO userDTO, String encryptedPassword){
+    public static User convert(UserRegistrationDTO userDTO, String encryptedPassword){
         User user = new User();
         user.setName(userDTO.getName());
         user.setUsername(userDTO.getUsername());
         user.setEmail(userDTO.getEmail());
-        user.setPassword(userDTO.getPassword());
+        user.setPassword(encryptedPassword);
         user.setRole(userDTO.getRole());
         user.setRegistrationDate(userDTO.getRegistrationDate());
         return user;
