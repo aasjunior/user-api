@@ -1,8 +1,7 @@
 package com.aasjunior.userapi.controller;
 
-import com.aasjunior.userapi.dto.AuthenticationDTO;
-import com.aasjunior.userapi.dto.LoginResponseDTO;
-import com.aasjunior.userapi.dto.UserDTO;
+import com.aasjunior.userapi.dto.LoginRequest;
+import com.aasjunior.userapi.dto.LoginResponse;
 import com.aasjunior.userapi.dto.UserRegistrationDTO;
 import com.aasjunior.userapi.model.User;
 import com.aasjunior.userapi.repository.UserRepository;
@@ -14,7 +13,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,7 +29,7 @@ public class AuthenticationController {
     private final PasswordEncoder passwordEncoder;
 
     @PostMapping("/login")
-    public ResponseEntity login(@RequestBody @Valid AuthenticationDTO data){
+    public ResponseEntity login(@RequestBody @Valid LoginRequest data){
         try {
             var usernamePassword = new UsernamePasswordAuthenticationToken(
                     data.getUsername(),
@@ -39,7 +37,7 @@ public class AuthenticationController {
             );
             var auth = this.authenticationManager.authenticate(usernamePassword);
             var token = tokenService.generateToken((User) auth.getPrincipal());
-            return ResponseEntity.ok(new LoginResponseDTO(token));
+            return ResponseEntity.ok(new LoginResponse(token));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Erro durante a autenticação: " + e.getMessage());
         }
